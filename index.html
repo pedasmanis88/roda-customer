@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Roda hadiah customer">
+  <title>Roda Hadiah</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="page-shell">
+    <section class="hero">
+      <p class="eyebrow">Program Hadiah Customer</p>
+      <h1>Putar Roda Keberuntungan</h1>
+      <p>Isi data Anda, lalu tekan tombol putar untuk mendapatkan hadiah.</p>
+    </section>
+
+    <section class="game-card">
+      <div class="wheel-column">
+        <div class="wheel-wrap">
+          <div class="pointer" aria-hidden="true"></div>
+          <canvas id="wheel" width="720" height="720" aria-label="Roda hadiah"></canvas>
+        </div>
+        <button id="spinButton" class="spin-button" type="button" disabled>PUTAR SEKARANG</button>
+        <p id="status" class="status" role="status">Memuat daftar hadiah...</p>
+      </div>
+
+      <form id="customerForm" class="customer-form">
+        <h2>Data Customer</h2>
+        <label>
+          Nama
+          <input id="name" name="name" type="text" maxlength="80" required autocomplete="name">
+        </label>
+        <label>
+          Nomor WhatsApp / Email
+          <input id="contact" name="contact" type="text" maxlength="120" required autocomplete="email">
+        </label>
+        <label class="consent">
+          <input id="consent" type="checkbox" required>
+          <span>Saya menyetujui data ini digunakan untuk pencatatan hadiah.</span>
+        </label>
+        <div class="info-box">
+          <strong>Ketentuan</strong>
+          <p>Satu nomor WhatsApp atau email hanya dapat melakukan satu putaran.</p>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <dialog id="resultDialog">
+    <div class="result-content">
+      <p class="eyebrow">Selamat!</p>
+      <h2 id="resultTitle">Hadiah Anda</h2>
+      <p id="resultMessage"></p>
+      <button id="closeDialog" type="button">Tutup</button>
+    </div>
+  </dialog>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
