@@ -83,18 +83,32 @@ async function loadPrizes() {
     return;
   }
 
+  const cached = JSON.parse(localStorage.getItem("rodaPrizes") || "null");
+  const initial = Array.isArray(cached) && cached.length ? cached : config.initialPrizes;
+  if (Array.isArray(initial) && initial.length) {
+    prizes = initial;
+    drawWheel();
+    spinButton.disabled = false;
+    setStatus("Roda siap diputar. Memperbarui daftar hadiah...");
+  }
+
   try {
-    const response = await fetch(`${config.apiUrl}?action=config`, { redirect: "follow" });
+    const response = await fetch(`${config.apiUrl}?action=config&t=${Date.now()}`, {
+      redirect: "follow",
+      signal: AbortSignal.timeout(12000),
+    });
     const data = await response.json();
     if (!data.ok || !Array.isArray(data.prizes) || !data.prizes.length) {
       throw new Error(data.error || "Daftar hadiah kosong.");
     }
     prizes = data.prizes;
+    localStorage.setItem("rodaPrizes", JSON.stringify(prizes));
     drawWheel();
     spinButton.disabled = false;
     setStatus("Roda siap diputar.");
   } catch (error) {
-    setStatus(`Tidak dapat memuat hadiah: ${error.message}`, true);
+    if (prizes.length) setStatus("Roda memakai daftar hadiah tersimpan.");
+    else setStatus(`Tidak dapat memuat hadiah: ${error.message}`, true);
   }
 }
 
