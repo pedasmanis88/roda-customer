@@ -106,12 +106,14 @@ async function spin() {
 
   const name = document.querySelector("#name").value.trim();
   const contact = document.querySelector("#contact").value.trim();
+  const ticket = document.querySelector("#ticket").value.trim().toUpperCase();
 
   try {
     const data = await apiRequest({
       action: "spin",
       name,
       contact,
+      ticket,
       clientId: getClientId(),
     });
 
